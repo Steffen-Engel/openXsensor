@@ -1392,10 +1392,11 @@ volatile boolean  PulseTimeAvailable = false ;
 
 #if PIN_PPM == 2 // When pin 2 is used, arduino handle INT0 (see datasheet)
 ISR(INT0_vect, ISR_NOBLOCK)  // NOBLOCK allows other interrupts to be served when this one is activated 
+{
 #else            //// When pin 3 is used, arduino handle INT1
 ISR(INT1_vect, ISR_NOBLOCK)
-#endif
 {
+#endif
 	cli() ;
 	uint16_t time = TCNT1 ;	// Read timer 1
 	sei() ;
