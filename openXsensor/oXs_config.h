@@ -32,7 +32,7 @@
 
 // ***** 4.1 - Connecting 1 or 2 MS5611 barometric sensor *****
 #define VARIO // set as comment if there is no vario
-//#define SENSOR_IS_BMP180 // set as comment if baro sensor is MS5611
+#define SENSOR_IS_BMP180 // set as comment if baro sensor is MS5611
 //#define VARIO2 // set as comment if there is no second vario
 
 // ***** 4.2 - Sensitivity predefined by program *****
@@ -95,17 +95,17 @@
 #define SCALE_VOLTAGE      1.1 , 1     ,  1  , 1.004, 1   , 1                // optionnal, can be negative, can have decimals
 
 // ***** 6.3 - Max number of Lipo cells to measure (and transmit to Tx) *****
-//#define NUMBEROFCELLS 3   // Put this line as comment or set value to 0 (zero) if you do not want to transmit cell voltages.
+#define NUMBEROFCELLS 3   // Put this line as comment or set value to 0 (zero) if you do not want to transmit cell voltages.
 
 // ***** 6.4 - Current parameters  *****
-//#define PIN_CURRENTSENSOR   3
+#define PIN_CURRENTSENSOR   3
 #define MVOLT_AT_ZERO_AMP              2500    // in millivolt
 #define MVOLT_PER_AMP                  60      // in milliVolt per Amp
 #define RESISTOR_TO_GROUND_FOR_CURRENT  19.8   // put as comment or set to 0 if no divider is used
 #define RESISTOR_TO_CURRENT_SENSOR      39     // put as comment or set to 0 if no divider is used
 
 // --------- 7 - RPM (rotations per minute) settings ---------
-//#define MEASURE_RPM
+#define MEASURE_RPM
 
 // --------- 8 - Persistent memory settings ---------
 //#define SAVE_TO_EEPROM
@@ -136,12 +136,11 @@
 #define SETUP_MULTIPLEX_DATA_TO_SEND    \
                         5 , REL_ALTIMETER , 1 , 1 , 0 , -16384 , 16383 , \
                         7 , ALTIMETER_MAX , 1 , 1 , 0 , -16384 , 16383 , \
-                        6 , VERTICAL_SPEED , 1 , 1 , 0, -500 , 500 
-                        
-                        // 7 , CELL_TOT , 1 , 1 , 0 , -16384 , 16383 , \
-                        // 4 , VOLT_4 , 1 , 1 , 0 , -16384 , 16383 , \
-                        // 9 , PPM , 1 , 1 , 0 , -16384 , 16383 
-                        // 3 , ALTIMETER , 1 , 1 , 0 , -16384 , 16383 , \
+                        6 , VERTICAL_SPEED , 1 , 1 , 0, -500 , 500,      \
+                        /*  7 , CELL_TOT , 1 , 1 , 0 , -16384 , 16383 ,   */ \
+                        /*  4 , VOLT_4 , 1 , 1 , 0 , -16384 , 16383 ,     */ \
+                        /*  9 , PPM , 1 , 1 , 0 , -16384 , 16383,         */ \
+                        /*  3 , ALTIMETER , 1 , 1 , 0 , -16384 , 16383    */ \
 
 // --------- 10 - Sequencer ---------
 //#define SEQUENCE_OUTPUTS 0b100000  
