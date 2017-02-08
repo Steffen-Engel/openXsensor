@@ -183,7 +183,7 @@ void init()
 #endif // MEASURE_RPM
 	sei();  //allow interrupt in general
 
-// timer2 (used by analoWrite to generate PWM
+// timer2 (used by analogWrite to generate PWM
 	// set timer 2 prescale factor to 64
 #if defined(TCCR2) && defined(CS22)
 	sbi(TCCR2, CS22);

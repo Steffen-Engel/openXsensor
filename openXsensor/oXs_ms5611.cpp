@@ -22,7 +22,11 @@ uint16_t i2cReadCount ;
 
 
 #ifdef DEBUG  
-OXS_MS5611::OXS_MS5611(uint8_t addr, HardwareSerial &print)
+  #ifdef ARDUINO_AVR_LEONARDO
+    OXS_MS5611::OXS_MS5611(uint8_t addr, Serial_ &print)
+  #else
+    OXS_MS5611::OXS_MS5611(uint8_t addr, HardwareSerial &print)
+  #endif
 #else
 OXS_MS5611::OXS_MS5611(uint8_t addr)
 #endif

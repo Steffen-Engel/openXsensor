@@ -44,8 +44,12 @@ struct ONE_MEASUREMENT sensitivity ;
 class OXS_MS5611 {
 public:
 #ifdef DEBUG  
-  OXS_MS5611(uint8_t addr, HardwareSerial &print);
-#else
+  #ifdef ARDUINO_AVR_LEONARDO
+      OXS_MS5611(uint8_t addr, Serial_ &print);
+    #else
+      OXS_MS5611(uint8_t addr, HardwareSerial &print);
+    #endif
+  #else
   OXS_MS5611(uint8_t addr) ;
 #endif
   VARIODATA varioData ;

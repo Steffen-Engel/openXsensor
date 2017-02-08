@@ -21,7 +21,11 @@
 #define PROTOCOL  FRSKY_SPORT  // select between FRSKY_SPORT , FRSKY_HUB , FRSKY_SPORT_HUB , MULTIPLEX , HOTT
 
 // --------- 2 - Serial data pin choice ---------
+#ifdef ARDUINO_AVR_LEONARDO
+#define PIN_SERIALTX      11    // The pin which transmits the serial data to the telemetry receiver, on Leonardo 8, 9, 10 or 11
+#else
 #define PIN_SERIALTX      4    // The pin which transmits the serial data to the telemetry receiver, Usually pin 4
+#endif
 
 // --------- 3 - PPM settings ---------
 #define PIN_PPM           3       // default is 2 but my own device use 3
@@ -95,17 +99,17 @@
 #define SCALE_VOLTAGE      1.1 , 1     ,  1  , 1.004, 1   , 1                // optionnal, can be negative, can have decimals
 
 // ***** 6.3 - Max number of Lipo cells to measure (and transmit to Tx) *****
-#define NUMBEROFCELLS 3   // Put this line as comment or set value to 0 (zero) if you do not want to transmit cell voltages.
+//#define NUMBEROFCELLS 3   // Put this line as comment or set value to 0 (zero) if you do not want to transmit cell voltages.
 
 // ***** 6.4 - Current parameters  *****
-#define PIN_CURRENTSENSOR   3
+//#define PIN_CURRENTSENSOR   3
 #define MVOLT_AT_ZERO_AMP              2500    // in millivolt
 #define MVOLT_PER_AMP                  60      // in milliVolt per Amp
 #define RESISTOR_TO_GROUND_FOR_CURRENT  19.8   // put as comment or set to 0 if no divider is used
 #define RESISTOR_TO_CURRENT_SENSOR      39     // put as comment or set to 0 if no divider is used
 
 // --------- 7 - RPM (rotations per minute) settings ---------
-#define MEASURE_RPM
+//#define MEASURE_RPM
 
 // --------- 8 - Persistent memory settings ---------
 //#define SAVE_TO_EEPROM

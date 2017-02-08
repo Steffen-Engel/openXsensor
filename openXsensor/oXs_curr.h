@@ -23,7 +23,11 @@ struct ONE_MEASUREMENT milliAmps;       // in mA
 class OXS_CURRENT {
 public:
 #ifdef DEBUG  
-  OXS_CURRENT(uint8_t pinCurrent, HardwareSerial &print);
+  #ifdef ARDUINO_AVR_LEONARDO
+    OXS_CURRENT(uint8_t pinCurrent, Serial_ &print);
+  #else
+    OXS_CURRENT(uint8_t pinCurrent, HardwareSerial &print);
+  #endif
 #else
   OXS_CURRENT(uint8_t pinCurrent) ;
 #endif
@@ -34,7 +38,11 @@ public:
 
 private:
 #ifdef DEBUG  
+#ifdef ARDUINO_AVR_LEONARDO
+  Serial_* printer;
+#else
   HardwareSerial* printer;
+#endif
 #endif
   byte _pinCurrent;
   float offsetCurrentSteps ;

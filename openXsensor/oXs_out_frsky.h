@@ -199,7 +199,11 @@
 class OXS_OUT {
   public:
 #ifdef DEBUG  
-    OXS_OUT(uint8_t pinTx,HardwareSerial &print);
+  #ifdef ARDUINO_AVR_LEONARDO
+    OXS_OUT(uint8_t pinTx, Serial_ &print);
+  #else
+    OXS_OUT(uint8_t pinTx, HardwareSerial &print);
+  #endif
 #else
     OXS_OUT(uint8_t pinTx);
 #endif
@@ -216,7 +220,11 @@ class OXS_OUT {
 // used by both protocols  
     uint8_t _pinTx;
 #ifdef DEBUG  
-    HardwareSerial* printer;
+    #ifdef ARDUINO_AVR_LEONARDO
+      Serial_* printer;
+    #else
+      HardwareSerial* printer;
+    #endif
 #endif
  
 #if defined( PROTOCOL ) &&  ( ( PROTOCOL == FRSKY_SPORT ) || ( PROTOCOL == FRSKY_SPORT_HUB ) )    
@@ -452,13 +460,6 @@ uint32_t millis( void ) ;
 #define EXT_IFR          EIFR               //!< External Interrupt Flag Register
 #define EXT_ICR          EICRA              //!< External Interrupt Control Register
 
-#define TRXDDR  DDRD
-#define TRXPORT PORTD
-#define TRXPIN  PIND
-
-#define SET_TX_PIN( )    ( TRXPORT |= ( 1 << PIN_SERIALTX ) )
-#define CLEAR_TX_PIN( )  ( TRXPORT &= ~( 1 << PIN_SERIALTX ) )
-#define GET_RX_PIN( )    ( TRXPIN & ( 1 << PIN_SERIALTX ) )
 
 //******************* End of part used for handling of UART with Receiver
 

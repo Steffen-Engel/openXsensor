@@ -18,7 +18,11 @@ static uint8_t           _bmp085Mode;
 
 
 #ifdef DEBUG  
-OXS_BMP180::OXS_BMP180( HardwareSerial &print)
+#ifdef ARDUINO_AVR_LEONARDO
+  OXS_BMP180::OXS_BMP180( Serial_ &print)
+#else
+  OXS_BMP180::OXS_BMP180( HardwareSerial &print)
+#endif
 #else
 OXS_BMP180::OXS_BMP180(void)
 #endif

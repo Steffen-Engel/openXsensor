@@ -9,7 +9,11 @@ extern unsigned long millis( void ) ;
 extern void delay(unsigned long ms) ;
 
 #ifdef DEBUG  
-OXS_CURRENT::OXS_CURRENT(uint8_t pinCurrent, HardwareSerial &print)
+#ifdef ARDUINO_AVR_LEONARDO
+  OXS_CURRENT::OXS_CURRENT(uint8_t pinCurrent, Serial_ &print)
+#else
+  OXS_CURRENT::OXS_CURRENT(uint8_t pinCurrent, HardwareSerial &print)
+#endif
 #else
 OXS_CURRENT::OXS_CURRENT(uint8_t pinCurrent)
 #endif

@@ -22,9 +22,15 @@ void   blinkLed(uint8_t blinkType) ;
 // *************************************************************************************************************
 
 //Some IO, timer and interrupt specific defines.
-#define ENABLE_PIN_CHANGE_INTERRUPT( )       ( PCICR |= (1<<PCIE2) )
-#define DISABLE_PIN_CHANGE_INTERRUPT( )      ( PCICR &= ~( 1<<PCIE2 ) )
-#define CLEAR_PIN_CHANGE_INTERRUPT( )         ( PCIFR = (1<<PCIF2) )
+#ifdef ARDUINO_AVR_LEONARDO
+  #define ENABLE_PIN_CHANGE_INTERRUPT( )       ( PCICR |= (1<<PCIE0) )
+  #define DISABLE_PIN_CHANGE_INTERRUPT( )      ( PCICR &= ~( 1<<PCIE0 ) )
+  #define CLEAR_PIN_CHANGE_INTERRUPT( )         ( PCIFR = (1<<PCIF0) )
+#else
+  #define ENABLE_PIN_CHANGE_INTERRUPT( )       ( PCICR |= (1<<PCIE2) )
+  #define DISABLE_PIN_CHANGE_INTERRUPT( )      ( PCICR &= ~( 1<<PCIE2 ) )
+  #define CLEAR_PIN_CHANGE_INTERRUPT( )         ( PCIFR = (1<<PCIF2) )
+#endif
 
 #define ENABLE_TIMER_INTERRUPT( )       ( TIMSK1 |= ( 1<< OCIE1A ) )
 #define DISABLE_TIMER_INTERRUPT( )      ( TIMSK1 &= ~( 1<< OCIE1A ) )
@@ -39,15 +45,26 @@ void   blinkLed(uint8_t blinkType) ;
 #define EXT_IFR          EIFR               //!< External Interrupt Flag Register
 #define EXT_ICR          EICRA              //!< External Interrupt Control Register
 
-#define TRXDDR  DDRD
-#define TRXPORT PORTD
-#define TRXPIN  PIND
 
-#define SET_TX_PIN( )    ( TRXPORT |= ( 1 << PIN_SERIALTX ) )
-#define CLEAR_TX_PIN( )  ( TRXPORT &= ~( 1 << PIN_SERIALTX ) )
-#define GET_RX_PIN( )    ( TRXPIN & ( 1 << PIN_SERIALTX ) )
+#ifdef ARDUINO_AVR_LEONARDO
+  #define TRXDDR  DDRB
+  #define TRXPORT PORTB
+  #define TRXPIN  PINB
+// This does not work on Leonardo and I do not know why...
+//#define TRXDDR  *(portModeRegister(PIN_SERIALTX))
+//#define TRXPORT (*(portOutputRegister(PIN_SERIALTX)))
+//#define TRXPIN  *(portInputRegister(PIN_SERIALTX))
+#else
+  #define TRXDDR  *(portModeRegister(PIN_SERIALTX))
+  #define TRXPORT *(portOutputRegister(PIN_SERIALTX))
+  #define TRXPIN  *(portInputRegister(PIN_SERIALTX))
+#endif
 
-
+#define SET_TX_PIN( )    ( TRXPORT |= (digitalPinToBitMask(PIN_SERIALTX)) )
+#define CLEAR_TX_PIN( )  ( TRXPORT &= ~(digitalPinToBitMask(PIN_SERIALTX)) )
+#define CLEAR_TX_DDR( )  ( TRXDDR  &= ~(digitalPinToBitMask(PIN_SERIALTX)) )
+#define SET_TX_DDR( )    ( TRXDDR  |= (digitalPinToBitMask(PIN_SERIALTX)) )
+#define GET_RX_PIN( )    ( TRXPIN  & (digitalPinToBitMask(PIN_SERIALTX)) )
 
 
 
@@ -64,10 +81,10 @@ void   blinkLed(uint8_t blinkType) ;
 
 
 #ifndef cbi
-#define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
+  #define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
 #endif
 #ifndef sbi
-#define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
+  #define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
 #endif
 
 extern volatile bool RpmSet  ;

@@ -31,7 +31,11 @@
 class OXS_BMP180 {
 public:
 #ifdef DEBUG  
-  OXS_BMP180( HardwareSerial &print);
+  #ifdef ARDUINO_AVR_LEONARDO
+    OXS_BMP180(Serial_ &print);
+  #else
+    OXS_BMP180( HardwareSerial &print);
+  #endif
 #else
   OXS_BMP180( void ) ;
 #endif
@@ -79,7 +83,11 @@ private:
     float abs_deltaClimbRate ;
       
 #ifdef DEBUG
-  HardwareSerial* printer;
+#ifdef ARDUINO_AVR_LEONARDO
+    Serial_* printer;
+#else
+    HardwareSerial* printer;
+#endif
 #endif
 }; // end class OXS_MS5611
 
